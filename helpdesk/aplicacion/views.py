@@ -1,8 +1,15 @@
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.views.decorators.csrf import csrf_protect
+
+from .forms import ClienteForm, TecnicoForm
+
+
+from .models import Cliente,  Tecnico
 
 # Create your views here.
+@csrf_protect
 def login_user(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -11,18 +18,76 @@ def login_user(request):
 
         if user is not None:
             login(request, user)
-            return redirect('admi_dashboard')
+            # Redireccionar según el grupo al que pertenece el usuario
+            if user.groups.filter(name='Administracion').exists():
+                return redirect('adm_dashboard')
+            elif user.groups.filter(name='Tecnico').exists():
+                return redirect('tec_dashboard')
+            elif user.groups.filter(name='Cliente').exists():
+                return redirect('cli_dashboard')
         else:
             return HttpResponse("Usuario o Contraseña incorrecta")
-
+    # Devolver la plantilla de inicio de sesión para GET
     return render(request, 'registration/login.html')
 
 def logout_user(request):
     logout(request)
     return redirect('login')
 
-def admi_profile(request):
-    return render(request, 'administracion/profile.html')
+def index(request):
+    return redirect('login')
 
-def admi_dashboard(request):
-    return render(request, 'administracion/dashboard.html')
+
+##SECCION DE ADMINISTRACION
+def adm_dashboard(request):
+    return render(request, 'administracion/tickets.html')
+
+def adm_tickets(request):
+    return render(request, 'administracion/tickets.html')
+
+def adm_equipo(request):
+    # Obtener todos los clientes
+    equipos = Tecnico.objects.all()
+    return render(request, 'administracion/equipo.html', {'equipos': equipos})
+
+def adm_clientes(request):
+    # Obtener todos los clientes
+    clientes = Cliente.objects.all()
+    return render(request, 'administracion/clientes.html', {'clientes': clientes})
+
+def crear_cliente(request):
+    if request.method == 'POST':
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('adm_clientes')  # Redirige a la página de éxito
+    else:
+        form = ClienteForm()
+    return render(request, 'administracion/crear_cliente.html', {'form': form})
+
+def crear_tecnico(request):
+    if request.method == 'POST':
+        form = TecnicoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('adm_equipo')  # Redirige a la página de éxito
+    else:
+        form = ClienteForm()
+    return render(request, 'administracion/crear_tecnico.html', {'form': form})
+
+def adm_profile(request):
+    administrador = request.user
+
+    print(administrador)
+
+    return render(request, 'administracion/profile.html', {'administrador':administrador})
+
+##SECCION DE CLIENTES
+def cli_dashboard(request):
+    return render(request, 'cliente/dashboard.html')
+
+
+##SECCION DE TECNICOS
+def tec_dashboard(request):
+    return render(request, 'tecnico/dashboard.html')
+

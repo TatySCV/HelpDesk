@@ -1,0 +1,46 @@
+{% extends 'administracion/dashboard.html' %}
+
+{% block admin_section %}
+
+{% load static %}
+<section id="contenedor-divs">
+
+    <p>CLIENTES ADMINISTRADOR</p>
+
+    <div class="agregar_cliente">
+        <a href="{% url 'create_cli' %}"> <center><button type="submit" class="btn btn-outline-dark">Agregar Clientes</button></center> </a>
+    </div>
+
+    <div class="listar_clientes">
+        <h1>Listado de Clientes</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre de Usuario</th>
+                <th>Correo Electrónico</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Comuna</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+            <tr>
+                <td>{{ cliente.user.username }}</td>
+                <td>{{ cliente.user.email }}</td>
+                <td>{{ cliente.user.first_name }}</td>
+                <td>{{ cliente.user.last_name }}</td>
+                <td>{{ cliente.comuna }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+    
+
+</section>
+
+{% endblock %}
+
+

@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="{% static 'aplicacion/css/administracion/dashboard.css' %}">
         
 
-        <title>Mesa Ayuda - Administrador</title>
+        <title>CCTV</title>
 
         <style>
             
@@ -26,11 +26,9 @@
         
         <div id="sideNavigation" class="sidenav">
         {% if user.is_authenticated %}
-        <a href="{% url 'adm_tickets' %}" id="principal" class="nav-link activate"><i class="bi bi-ticket-detailed">    <p class="ocultar">Tickets</p></i> </a>
-        <a href="{% url 'adm_equipo' %}" id="principal" class="nav-link activate"><i class="bi bi-building">    <p class="ocultar">Equipo</p></i> </a>
-        <a href="{% url 'adm_clientes' %}" id="principal" class="nav-link activate"><i class="bi bi-people-fill">    <p class="ocultar">Clientes</p></i> </a>
+        <a href="#" id="principal" class="nav-link activate"><i class="bi bi-house-door">    <p class="ocultar">Tickets</p></i> </a>
         
-        <a href="{% url 'adm_profile' %}" id="principal" class="nav-link activate"><i class="bi bi-house-gear-fill">    <p class="ocultar">Mi perfil</p></i> </a>
+        <a href="#" id="principal" class="nav-link activate"><i class="bi bi-house-door">    <p class="ocultar">Mi perfil</p></i> </a>
 
 
         <a href="{% url 'logout' %}" id="logout-link"><i class="bi bi-power">  <p class="ocultar">Cerrar Sesión</p></i> </a>
@@ -40,8 +38,10 @@
   
         <div class="container">
 
-            {% block admin_section %}
+            {% block principal_section %}
             
+            <h1>DASHBOARD INVITADO</h1>
+
             {% endblock %}
             
         </div>

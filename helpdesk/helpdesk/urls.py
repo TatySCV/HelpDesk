@@ -21,11 +21,24 @@ from aplicacion import views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    path('', views.index),
+
     path('accounts/login', views.login_user, name='login'),
     path('accounts/logout', views.logout_user, name='logout'),
 
-    path('admi/dashboard/', views.admi_dashboard, name='admi_dashboard'),
-    path('admi/profile/', views.admi_profile, name='adminprofile'),
+    path('adm/dashboard', views.adm_dashboard, name='adm_dashboard'),
+    path('adm/tickets', views.adm_tickets, name='adm_tickets'),
+    path('adm/equipo', views.adm_equipo, name='adm_equipo'),
+    path('adm/clientes', views.adm_clientes, name='adm_clientes'),
+    path('adm/profile', views.adm_profile, name='adm_profile'),
+    path('adm/create/cli', views.crear_cliente, name='create_cli'),
+    path('adm/create/tec', views.crear_tecnico, name='create_tec'),
+
+
+
+
+    path('cli/dashboard', views.cli_dashboard, name='cli_dashboard'),
+    path('tec/dashboard', views.tec_dashboard, name='tec_dashboard'),
 
 
 ]

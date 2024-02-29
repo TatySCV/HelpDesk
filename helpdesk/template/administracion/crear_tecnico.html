@@ -1,0 +1,19 @@
+{% extends 'administracion/dashboard.html' %}
+
+{% block admin_section %}
+
+{% load static %}
+<section id="contenedor-divs">
+
+    <p>CREAR EQUIPO ADMINISTRADOR</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Crear Equipo</button>
+    </form>
+
+</section>
+
+{% endblock %}
+

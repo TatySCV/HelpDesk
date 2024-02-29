@@ -5,7 +5,7 @@ body {
 
 #sideNavigation {
     width: 10%;
-    background-color: #E9374C;
+    background-color: black;
     position: fixed;
     height: 100%;
     overflow: hidden;
@@ -30,7 +30,7 @@ body {
 
 #sideNavigation a:hover {
     background-color: #ffffff;
-    color: #c70c22;
+    color: grey;
 }
 
 #logout-link {
@@ -43,19 +43,19 @@ body {
     color: white;
     font-size: 20px;
     text-decoration: none;
-    background-color: #E9374C;
+    background-color: black;
     transition: 0.3s;
 }
 
 #logout-link:hover {
     background-color: #ffffff;
-    color: #c70c22;
+    color: grey;
 }
 
 .container {
-    margin-left: 15%;
+    margin-left: 10%;
     padding: 16px;
-    color: white;
+    color: black;
     font-size: 16px;
 }
 
