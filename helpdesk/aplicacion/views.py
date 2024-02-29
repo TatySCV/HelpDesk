@@ -4,9 +4,9 @@ from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_protect
 
 from .forms import ClienteForm, TecnicoForm
+from django.shortcuts import redirect, get_object_or_404
 
-
-from .models import Cliente,  Tecnico
+from .models import Cliente, Tecnico, Ticket
 
 # Create your views here.
 @csrf_protect
@@ -43,11 +43,14 @@ def adm_dashboard(request):
     return render(request, 'administracion/tickets.html')
 
 def adm_tickets(request):
-    return render(request, 'administracion/tickets.html')
+    tickets = Ticket.objects.all()
+
+    return render(request, 'administracion/tickets.html', {'tickets': tickets})
 
 def adm_equipo(request):
-    # Obtener todos los clientes
+    # Obtener todos los técnicos
     equipos = Tecnico.objects.all()
+
     return render(request, 'administracion/equipo.html', {'equipos': equipos})
 
 def adm_clientes(request):
@@ -65,6 +68,20 @@ def crear_cliente(request):
         form = ClienteForm()
     return render(request, 'administracion/crear_cliente.html', {'form': form})
 
+def eliminar_cliente(request, cliente_id):
+    cliente = get_object_or_404(Cliente, pk=cliente_id)
+    if request.method == 'POST':
+        cliente.user.delete()  # Eliminar el usuario asociado al cliente
+        cliente.delete()  # Eliminar el cliente
+    return redirect('adm_clientes')  # Redirigir a la página deseada después de eliminar el cliente
+
+def eliminar_tecnico(request, tecnico_id):
+    tecnico = get_object_or_404(Tecnico, pk=tecnico_id)
+    if request.method == 'POST':
+        tecnico.user.delete()  # Eliminar el usuario asociado al cliente
+        tecnico.delete()  # Eliminar el cliente
+    return redirect('adm_equipo')  # Redirigir a la página deseada después de eliminar el cliente
+
 def crear_tecnico(request):
     if request.method == 'POST':
         form = TecnicoForm(request.POST)
@@ -72,7 +89,7 @@ def crear_tecnico(request):
             form.save()
             return redirect('adm_equipo')  # Redirige a la página de éxito
     else:
-        form = ClienteForm()
+        form = TecnicoForm()
     return render(request, 'administracion/crear_tecnico.html', {'form': form})
 
 def adm_profile(request):

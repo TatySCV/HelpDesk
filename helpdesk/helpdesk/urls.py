@@ -33,9 +33,8 @@ urlpatterns = [
     path('adm/profile', views.adm_profile, name='adm_profile'),
     path('adm/create/cli', views.crear_cliente, name='create_cli'),
     path('adm/create/tec', views.crear_tecnico, name='create_tec'),
-
-
-
+    path('eliminar_cliente/<int:cliente_id>/', views.eliminar_cliente, name='eliminar_cliente'),
+    path('eliminar_tecnico/<int:tecnico_id>/', views.eliminar_tecnico, name='eliminar_tecnico'),
 
     path('cli/dashboard', views.cli_dashboard, name='cli_dashboard'),
     path('tec/dashboard', views.tec_dashboard, name='tec_dashboard'),

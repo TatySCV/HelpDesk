@@ -5,7 +5,41 @@
 {% load static %}
 <section id="contenedor-divs">
 
-    <p>TICKETS ADMINISTRADOR</p>
+    <div class="agregar_ticket">
+        <h5>Tickets</h5><a class="float-end mb-2" href="#"> <center><button type="submit" class="btn btn-outline-dark">Crear Ticket</button></center> </a>
+    </div>
+
+    <div class="listar_tickets">
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Asunto</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Respuestas</th>
+                <th scope="col">Tecnico</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for ticket in tickets %}
+                <tr>
+                    <td>{{ ticket.id }}</td>
+                    <td>{{ ticket.asunto }}</td>
+                    <td>{{ ticket.estado }}</td>
+                    <td>{{ ticket.num_respuestas }}</td>
+                    <td>{{ ticket.tecnico.user.first_name }}</td>
+                    <td>
+                        <form action="#" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-dark btn-sm"><i class="bi bi-pencil-square"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+    </div>
 
 </section>
 
