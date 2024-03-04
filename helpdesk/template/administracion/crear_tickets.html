@@ -1,0 +1,28 @@
+{% extends 'administracion/dashboard.html' %}
+
+{% block admin_section %}
+
+{% load static %}
+<section id="contenedor-divs">
+
+    <p>CREAR CLIENTES ADMINISTRADOR</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="id_nombre" class="mt-4">Asunto:</label>
+            {{ form.asunto }}
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlSelect1" class="mt-4">Descripcion</label>
+          {{ form.descripcion }}
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-outline-dark mt-5">Crear Cliente</button>
+        </div>
+    </form>
+
+</section>
+
+{% endblock %}
+

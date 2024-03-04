@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_protect
 
-from .forms import ClienteForm, TecnicoForm
+from .forms import ClienteForm, TecnicoForm, TicketsForm
 from django.shortcuts import redirect, get_object_or_404
 
 from .models import Cliente, Tecnico, Ticket
@@ -57,6 +57,16 @@ def adm_clientes(request):
     # Obtener todos los clientes
     clientes = Cliente.objects.all()
     return render(request, 'administracion/clientes.html', {'clientes': clientes})
+
+def crear_ticket(request):
+    if request.method == 'POST':
+        form = TicketsForm(request.user.cliente, request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('adm_tickets')  # Redirige a la página de éxito
+    else:
+        form = TicketsForm()
+    return render(request, 'administracion/crear_tickets.html', {'form': form})
 
 def crear_cliente(request):
     if request.method == 'POST':

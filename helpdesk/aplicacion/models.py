@@ -27,16 +27,12 @@ class PhotoBook(models.Model):
 class Estado(models.Model):
     nombre = models.TextField(max_length=255)
 
-class Prioridad(models.Model):
-    nombre = models.TextField(max_length=255)
-
 class Ticket(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    asunto = models.TextField(max_length=255)
+    asunto = models.TextField(max_length=100)
     descripcion = models.TextField(max_length=255)
     estado = models.ForeignKey(Estado, on_delete=models.CASCADE)
     num_respuestas = models.IntegerField()
-    prioridad = models.ForeignKey(Prioridad, on_delete=models.CASCADE)
     tecnico_asig = models.ForeignKey(Tecnico, on_delete=models.CASCADE)
     fecha_solucion = models.DateTimeField()
 

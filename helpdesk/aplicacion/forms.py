@@ -1,9 +1,10 @@
 import random
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.hashers import make_password
+from django.utils import timezone
 
 from django import forms
-from .models import Cliente, Tecnico
+from .models import Cliente, Tecnico, Ticket
 from django.contrib.auth.models import User, Group
 
 def generar_username(nombre, apellido):
@@ -102,3 +103,21 @@ class TecnicoForm(forms.ModelForm):
     class Meta:
         model = Tecnico
         fields = ['nombre', 'apellido', 'nivel', 'contraseña']
+
+class TicketsForm(forms.ModelForm):
+    def __init__(self, cliente, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Configurar valores predeterminados
+        self.initial['estado'] = 'Nuevo'
+        self.initial['num_respuestas'] = 0
+        self.initial['tecnico_asig'] = None
+        self.initial['fecha_ingreso'] = timezone.now()
+        self.initial['fecha_solucion'] = None
+        self.initial['tiempo_dedicado'] = 0
+        # Restringir el campo cliente
+        self.fields['cliente'].widget = forms.HiddenInput()
+        self.fields['cliente'].initial = cliente
+
+    class Meta:
+        model = Ticket
+        fields = ['cliente', 'asunto', 'descripcion', 'estado', 'num_respuestas', 'tecnico_asig', 'fecha_ingreso', 'fecha_solucion', 'tiempo_dedicado']
